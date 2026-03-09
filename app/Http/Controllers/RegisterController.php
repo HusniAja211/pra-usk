@@ -47,7 +47,8 @@ class RegisterController extends Controller
         User::create([
             'name' => $request->first_name . ' ' . $request->last_name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         return redirect()->route('login.index')
@@ -71,7 +72,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        return redirect()->route('member.index')->with('success', 'Berhasil ditambah!');
+        return redirect()->route('admin.member.index')->with('success', 'Berhasil ditambah!');
 
     }
 
@@ -117,7 +118,7 @@ class RegisterController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('member.index')->with('success', 'User berhasil diupdate');
+        return redirect()->route('admin.member.index')->with('success', 'User berhasil diupdate');
     }
 
     /**
@@ -128,6 +129,6 @@ class RegisterController extends Controller
         $member = User::find($id);
         $member->delete();
 
-        return redirect()->route('member.index')->with('success', 'Delete Berhasil!');
+        return redirect()->route('admin.member.index')->with('success', 'Delete Berhasil!');
     }
 }

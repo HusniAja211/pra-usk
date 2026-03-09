@@ -5,7 +5,7 @@
             <h4 class="text-muted">Edit Member</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('member.update', $member->id)}}" method="post">
+            <form action="{{ route('admin.member.update', $member->id)}}" method="post">
                 @csrf
                 @method('PUT')
                 <div class="row">

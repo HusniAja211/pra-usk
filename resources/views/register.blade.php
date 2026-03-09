@@ -63,7 +63,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group mb-3">
                                         <input type="text" class="form-control" placeholder="First Name"
-                                            name="first_name" value="{{old('first_name')}}" required />
+                                            name="first_name" value="{{ old('first_name') }}" required />
                                     </div>
                                 </div>
                                 @error('first_name')
@@ -72,7 +72,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group mb-3">
                                         <input type="text" class="form-control" placeholder="Last Name"
-                                            name="last_name" value="{{old('last_name')}}" />
+                                            name="last_name" value="{{ old('last_name') }}" />
                                     </div>
                                 </div>
                                 @error('last_name')
@@ -81,14 +81,15 @@
                             </div>
                             <div class="form-group mb-3">
                                 <input type="email" class="form-control" placeholder="Email Address" name="email"
-                                    required value="{{old('email')}}" />
+                                    required value="{{ old('email') }}" />
                             </div>
                             @error('email')
                                 <div style="color:red">{{ $message }}</div>
                             @enderror
+
                             <div class="form-group mb-3">
                                 <input type="password" class="form-control" placeholder="Password" name="password"
-                                    required value="{{old('password')}}" />
+                                    required value="{{ old('password') }}" />
                             </div>
                             @error('password')
                                 <div style="color:red">{{ $message }}</div>

@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MemberDashboardController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,23 +21,54 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 // Admin Routes
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin'])
+->prefix('admin')
+->name('admin.')
+->group(function () {
 
     Route::get('admin/dashboard', function () {
         return view('content.admin.dashboard.index');
     })->name('admin.dashboard.index');
-    Route::get('member', [RegisterController::class, 'index'])->name('member.index');
-    Route::get('member/edit/{id}', [RegisterController::class, 'edit'])->name('member.edit');
-    Route::put('member/update/{id}', [RegisterController::class, 'update'])->name('member.update');
-    Route::get('member/create', [RegisterController::class, 'createInAdmin'])->name('member.create');
-    Route::post('member/store', [RegisterController::class, 'storeInAdmin'])->name('member.store');
-    Route::delete('member/destroy/{id}', [RegisterController::class, 'destroy'])->name('member.destroy');
+    
+    Route::resource('member', RegisterController::class);
+
+    Route::resource('category', CategoryController::class);
+
+    Route::resource('book', BookController::class);
+
+    Route::resource('payment', PaymentController::class);
+
+    Route::post('/payment/{id}/pay',[PaymentController::class,'pay'])
+        ->name('payment.pay');
+        
+    Route::get('/payment/{id}/invoice',[PaymentController::class,'invoice'])
+        ->name('payment.invoice');
+
 });
 
 // User Routes
-Route::middleware(['auth', 'user'])->group(function () {
 
-    Route::get('user/dashboard', function () {
-        return view('content.user.dashboard.index');
-    })->name('user.dashboard.index');
+Route::prefix('user')->middleware('auth')->group(function () {
+
+    Route::get('/dashboard', [MemberDashboardController::class, 'index'])
+        ->name('user.dashboard');
+
+    Route::get('/about', function () {
+        return view('content.user.about');
+    })->name('about');
+
+    Route::get('/cart', [CartController::class, 'index'])
+        ->name('cart.index');
+
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])
+        ->name('cart.add');
+
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])
+        ->name('cart.checkout');
+
+    Route::delete('/user/cart/remove/{id}', [CartController::class,'remove'])
+        ->name('cart.remove');
+
+    Route::post('/buy-now/{id}', [OrderController::class, 'buyNow'])
+        ->name('buy.now');
 });

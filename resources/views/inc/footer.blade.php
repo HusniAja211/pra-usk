@@ -8,7 +8,7 @@
           </div>
           <div class="col-sm-6 ms-auto my-1">
             <ul class="list-inline footer-link mb-0 justify-content-sm-end d-flex">
-              <li class="list-inline-item"><a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard.index') : route('user.dashboard.index')}}">Home</a></li>
+              <li class="list-inline-item"><a href="{{ auth()->user()->role == 'admin' ? route('admin.admin.dashboard.index') : route('user.dashboard')}}">Home</a></li>
             </ul>
           </div>
         </div>
