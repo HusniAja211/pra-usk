@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminCartController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
@@ -8,6 +10,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,9 +29,8 @@ Route::middleware(['auth', 'admin'])
 ->name('admin.')
 ->group(function () {
 
-    Route::get('admin/dashboard', function () {
-        return view('content.admin.dashboard.index');
-    })->name('admin.dashboard.index');
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])
+        ->name('dashboard');
     
     Route::resource('member', RegisterController::class);
 
@@ -43,6 +45,18 @@ Route::middleware(['auth', 'admin'])
         
     Route::get('/payment/{id}/invoice',[PaymentController::class,'invoice'])
         ->name('payment.invoice');
+
+    Route::get('cart', [AdminCartController::class, 'index'])
+        ->name('cart.index');
+
+    Route::get('report', [ReportController::class, 'index'])
+        ->name('report.index');
+
+    Route::get('report/chart', [ReportController::class, 'chartReport'])
+        ->name('report.graphic');
+
+    Route::get('admin/report/products', [ReportController::class, 'productReport'])
+        ->name('report.products');
 
 });
 

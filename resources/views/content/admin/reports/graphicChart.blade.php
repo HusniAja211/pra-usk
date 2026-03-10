@@ -1,0 +1,1 @@
+<canvas id="graphicChart" height="100"></canvas>

@@ -79,7 +79,7 @@
                             </div>
                             <div class="d-grid mt-4">
                                 @auth
-                                    <a href="{{ auth()->user()->role == 'admin' ? route('admin.admin.dashboard.index') : route('user.dashboard') }}"
+                                    <a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard') : route('user.dashboard') }}"
                                         class="btn btn-success">Dashboard</a>
                                 @endauth
                                 @if (empty(Auth::check()))

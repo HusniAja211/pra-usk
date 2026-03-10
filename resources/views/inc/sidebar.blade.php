@@ -1,7 +1,7 @@
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
         <div class="m-header">
-            <a href="{{ auth()->user()->role == 'admin' ? route('admin.admin.dashboard.index') : route('user.dashboard') }}"
+            <a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard') : route('user.dashboard') }}"
                 class="b-brand text-primary">
                 <!-- ========   Change your logo from here   ============ -->
                 <img src="{{ asset('template/dist/assets/images/logo-white.svg') }}" alt="logo image" class="logo-lg" />
@@ -9,12 +9,9 @@
         </div>
         <div class="navbar-content">
             <ul class="pc-navbar">
-                <li class="pc-item pc-caption">
-                    <label>Navigation</label>
-                </li>
                 @auth
                     <li class="pc-item">
-                        <a href="{{ auth()->user()->role == 'admin' ? route('admin.admin.dashboard.index') : route('user.dashboard') }}"
+                        <a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard') : route('user.dashboard') }}"
                             class="pc-link"><span class="pc-micon"> <i class="ph ph-gauge"></i></span><span
                                 class="pc-mtext">Dashboard</span></a>
                     </li>
@@ -45,9 +42,9 @@
                                 <li class="pc-item"><a class="pc-link" href="{{ route('admin.payment.index') }}"><i
                                             class="ph ph-money"></i> Payment
                                         Books</a></li>
-                                <li class="pc-item"><a class="pc-link" href="#!"><i class="ph ph-shopping-cart"></i>
+                                <li class="pc-item"><a class="pc-link" href="{{ route('admin.cart.index') }}"><i class="ph ph-shopping-cart"></i>
                                         Carts</a></li>
-                                <li class="pc-item"><a class="pc-link" href="#!"><i class="ph ph-chart-bar"></i>
+                                <li class="pc-item"><a class="pc-link" href="{{ route('admin.report.index') }}"><i class="ph ph-chart-bar"></i>
                                         Reports</a></li>
                             </ul>
                         </li>

@@ -34,11 +34,12 @@
     <!-- [ Header Topbar ] start -->
     <header class="pc-header">
         <div class="m-header">
-            <a href="{{ auth()->user()->role == 'admin' ? route('admin.admin.dashboard.index') : route('user.dashboard')}}" class="b-brand text-primary">
+            <a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard') : route('user.dashboard')}}" class="b-brand text-primary">
                 <!-- ========   Change your logo from here   ============ -->
                 <img src="{{ asset('template/dist/assets/images/logo-white.svg') }}" alt="logo image" class="logo-lg" />
             </a>
         </div>
+        @vite(['resources/js/app.js'])
         @include('inc.navbar')
     </header>
     <!-- [ Header ] end -->
