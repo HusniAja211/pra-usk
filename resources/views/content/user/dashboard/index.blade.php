@@ -22,7 +22,7 @@
                         </h6>
 
                         {{-- Author --}}
-                        <small class="text-muted">
+                        <small class="text-muted"><strong>Author: </strong>
                             {{ $book->author }}
                         </small>
 

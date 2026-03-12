@@ -11,6 +11,7 @@
 
             <thead class="table-light">
                 <tr>
+                    <th>User</th>
                     <th>Book</th>
                     <th>Price</th>
                     <th width="120">Qty</th>
@@ -31,7 +32,7 @@
                 @endphp
 
                 <tr>
-
+                    <td class="d-flex align-items-center gap-3"{{$cart->user_id->name}}> </td>
                     {{-- Book --}}
                     <td class="d-flex align-items-center gap-3">
 

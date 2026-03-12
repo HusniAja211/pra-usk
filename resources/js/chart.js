@@ -27,6 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     responsive: true,
                     scales: {
                         y: { beginAtZero: true }
+                    },
+                    plugins:{
+                        legend: {
+                            position: 'top',
+                            align: 'start',
+                        }
                     }
                 }
             });
