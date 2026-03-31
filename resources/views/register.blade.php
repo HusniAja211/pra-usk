@@ -1,140 +1,173 @@
 <!doctype html>
 <html lang="en">
-<!-- [Head] start -->
-
 <head>
-    <title>Register | Gradient Able Dashboard Template</title>
-    <!-- [Meta] -->
+    <title>Register | AkuDatang</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description"
-        content="Gradient Able is trending dashboard template made using Bootstrap 5 design framework. Gradient Able is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies." />
-    <meta name="keywords"
-        content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard" />
-    <meta name="author" content="codedthemes" />
 
-    <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ asset('template/dist/assets/images/favicon.svg') }}" type="image/x-icon" />
-    <!-- [Google Font : Poppins] icon -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-    <!-- [Tabler Icons] https://tablericons.com -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/tabler-icons.min.css') }}" />
-    <!-- [Feather Icons] https://feathericons.com -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/feather.css') }}" />
-    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/fontawesome.css') }}" />
-    <!-- [Material Icons] https://fonts.google.com/icons -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/material.css') }}" />
-    <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('template/dist/assets/css/style.css') }}" id="main-style-link" />
     <link rel="stylesheet" href="{{ asset('template/dist/assets/css/style-preset.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/tabler-icons.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/fontawesome.css') }}" />
 
+    <style>
+        /* Custom Monochrome Blue Overrides */
+        body {
+            background-color: #f8faff !important; /* Biru sangat pucat */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .auth-main.v1 {
+            background: radial-gradient(circle at top right, #e0eaff 0%, #f8faff 100%) !important;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08); /* Shadow biru tipis */
+        }
+
+        .form-control {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #2563eb !important;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .text-blue-primary {
+            color: #2563eb;
+        }
+
+        .input-group-text {
+            background-color: transparent;
+            border-color: #e2e8f0;
+        }
+
+        /* Styling Social Buttons agar Monokrom */
+        .avtar.bg-social-outline {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .avtar.bg-social-outline:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .error-text {
+            font-size: 0.75rem;
+            color: #dc2626;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+    </style>
 </head>
-<!-- [Head] end -->
-<!-- [Body] Start -->
 
-<body data-pc-header="header-1" data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true"
-    data-pc-direction="ltr" data-pc-theme="light">
-    <!-- [ Pre-loader ] start -->
-    <div class="loader-bg">
-        <div class="loader-track">
-            <div class="loader-fill"></div>
-        </div>
-    </div>
-    <!-- [ Pre-loader ] End -->
-
-    <div class="auth-main v1 bg-grd-primary">
+<body>
+    <div class="auth-main v1">
         <div class="auth-wrapper">
             <div class="auth-form">
                 <div class="card my-5">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="{{ asset('template/dist/assets/images/logo-dark.svg') }}" alt="images"
-                                class="img-fluid mb-4" />
-                            <h4 class="f-w-500 mb-1">Register with your email</h4>
-                            <p class="mb-4">Already have an Account? <a href="{{ route('login.index') }}"
-                                    class="link-primary">Log in</a></p>
+                            <img src="{{ asset('template/dist/assets/images/logo-dark.svg') }}" alt="logo" class="img-fluid mb-4" style="max-height: 40px;" />
+                            <h4 class="f-w-600 mb-1">Daftar Akun Baru</h4>
+                            <p class="mb-4 text-muted small">Sudah punya akun? <a href="{{ route('login.index') }}" class="text-blue-primary fw-bold">Masuk di sini</a></p>
                         </div>
+
                         <form action="{{ route('register.store') }}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group mb-3">
-                                        <input type="text" class="form-control" placeholder="First Name"
-                                            name="first_name" value="{{ old('first_name') }}" required />
+                                        <label class="form-label small fw-500">Nama Depan</label>
+                                        <input type="text" class="form-control" placeholder="Contoh: Budi" name="first_name" value="{{ old('first_name') }}" required />
+                                        @error('first_name') <div class="error-text text-danger">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
-                                @error('first_name')
-                                    <div style="color:red">{{ $message }}</div>
-                                @enderror
                                 <div class="col-sm-6">
                                     <div class="form-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Last Name"
-                                            name="last_name" value="{{ old('last_name') }}" />
+                                        <label class="form-label small fw-500">Nama Belakang</label>
+                                        <input type="text" class="form-control" placeholder="Susanto" name="last_name" value="{{ old('last_name') }}" />
+                                        @error('last_name') <div class="error-text">{{ $message }}</div> @enderror
                                     </div>
                                 </div>
-                                @error('last_name')
-                                    <div style="color:red">{{ $message }}</div>
-                                @enderror
                             </div>
-                            <div class="form-group mb-3">
-                                <input type="email" class="form-control" placeholder="Email Address" name="email"
-                                    required value="{{ old('email') }}" />
-                            </div>
-                            @error('email')
-                                <div style="color:red">{{ $message }}</div>
-                            @enderror
 
                             <div class="form-group mb-3">
-                                <input type="password" class="form-control" placeholder="Password" name="password"
-                                    required value="{{ old('password') }}" />
+                                <label class="form-label small fw-500">Alamat Email</label>
+                                <input type="email" class="form-control" placeholder="nama@email.com" name="email" required value="{{ old('email') }}" />
+                                @error('email') <div class="error-text">{{ $message }}</div> @enderror
                             </div>
-                            @error('password')
-                                <div style="color:red">{{ $message }}</div>
-                            @enderror
+
                             <div class="form-group mb-3">
-                                <input type="password" class="form-control" placeholder="Confirm Password"
-                                    name="confirm_password" />
+                                <label class="form-label small fw-500">Kata Sandi</label>
+                                <input type="password" class="form-control" placeholder="Minimal 8 karakter" name="password" required />
+                                @error('password') <div class="error-text">{{ $message }}</div> @enderror
                             </div>
-                            @error('confirm_password')
-                                <div style="color:red">{{ $message }}</div>
-                            @enderror
-                            <div class="d-flex mt-1 justify-content-between">
-                                <div class="form-check">
-                                    <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
-                                        checked="" />
-                                    <label class="form-check-label text-muted" for="customCheckc1">I agree to all the
-                                        Terms
-                                        & Condition</label>
-                                </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label small fw-500">Konfirmasi Sandi</label>
+                                <input type="password" class="form-control" placeholder="Ulangi kata sandi" name="confirm_password" required />
                             </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="terms" checked required />
+                                <label class="form-check-label text-muted small" for="terms">
+                                    Saya setuju dengan <a href="#" class="text-blue-primary">Syarat & Ketentuan</a> yang berlaku.
+                                </label>
+                            </div>
+
                             <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-primary">Create Account</button>
+                                <button type="submit" class="btn btn-primary shadow-sm">Buat Akun</button>
                             </div>
                         </form>
-                        <div class="saprator my-3">
-                            <span>Or continue with</span>
+
+                        <div class="saprator my-4">
+                            <span class="text-muted small">Atau daftar dengan</span>
                         </div>
+
                         <div class="text-center">
                             <ul class="list-inline mx-auto mt-3 mb-0">
                                 <li class="list-inline-item">
-                                    <a href="https://www.facebook.com/"
-                                        class="avtar avtar-s rounded-circle bg-facebook" target="_blank">
-                                        <i class="fab fa-facebook-f text-white"></i>
+                                    <a href="#" class="avtar avtar-s rounded-circle bg-social-outline">
+                                        <i class="fab fa-facebook-f"></i>
                                     </a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="https://twitter.com/" class="avtar avtar-s rounded-circle bg-twitter"
-                                        target="_blank">
-                                        <i class="fab fa-twitter text-white"></i>
+                                    <a href="#" class="avtar avtar-s rounded-circle bg-social-outline">
+                                        <i class="fab fa-twitter"></i>
                                     </a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a href="https://myaccount.google.com/"
-                                        class="avtar avtar-s rounded-circle bg-googleplus" target="_blank">
-                                        <i class="fab fa-google text-white"></i>
+                                    <a href="#" class="avtar avtar-s rounded-circle bg-social-outline">
+                                        <i class="fab fa-google"></i>
                                     </a>
                                 </li>
                             </ul>
@@ -144,46 +177,7 @@
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
-    <!-- Required Js -->
-    <script src="{{ asset('template/dist/assets/js/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/plugins/simplebar.min.js') }}"></script>
+
     <script src="{{ asset('template/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/fonts/custom-font.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/script.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/theme.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/plugins/feather.min.js') }}"></script>
-
-
-    <script>
-        layout_change('light');
-    </script>
-
-    <script>
-        layout_sidebar_change('light');
-    </script>
-
-    <script>
-        change_box_container('false');
-    </script>
-
-    <script>
-        layout_caption_change('true');
-    </script>
-
-    <script>
-        layout_rtl_change('false');
-    </script>
-
-    <script>
-        preset_change('preset-1');
-    </script>
-
-    <script>
-        header_change('header-1');
-    </script>
-
 </body>
-<!-- [Body] end -->
-
 </html>

@@ -32,7 +32,7 @@
                 @endphp
 
                 <tr>
-                    <td class="d-flex align-items-center gap-3"{{$cart->user_id->name}}> </td>
+                    <td class="d-flex align-items-center gap-3">{{ $cart->user->name }}</td>
                     {{-- Book --}}
                     <td class="d-flex align-items-center gap-3">
 
@@ -50,6 +50,7 @@
                             <small class="text-muted">
                                 {{ $cart->book->author }}
                             </small>
+                          
                         </div>
 
                     </td>

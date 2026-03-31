@@ -15,6 +15,35 @@
     <meta name="author" content="codedthemes" />
 
     @include('inc.head')
+    <style>
+    body {
+        /* Warna latar belakang yang tidak menyilaukan */
+        background-color: #f1f5f9 !important; 
+        color: #334155;
+    }
+
+    /* Sidebar dengan warna putih bersih agar kontras dengan body */
+    .pc-sidebar {
+        background: #ffffff !important;
+        border-right: 1px solid #e2e8f0 !important;
+    }
+
+    /* Beri sedikit warna pada teks sidebar agar tidak membosankan */
+    .pc-sidebar .pc-link {
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    /* Menu aktif dengan aksen biru yang tegas tapi elegan */
+    .pc-sidebar .pc-item.active > .pc-link {
+        background: #2563eb !important; /* Biru solid */
+        color: #ffffff !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        border-radius: 8px;
+    }
+
+    
+</style>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -43,8 +72,6 @@
         @include('inc.navbar')
     </header>
     <!-- [ Header ] end -->
-
-
 
     <!-- [ Main Content ] start -->
     <div class="pc-container">

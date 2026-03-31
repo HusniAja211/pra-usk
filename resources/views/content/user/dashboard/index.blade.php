@@ -55,17 +55,6 @@
                                 </button>
                             </form>
 
-                            {{-- Order Now --}}
-                            <form action="{{ route('buy.now', $book->id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="book_id" value="{{ $book->id }}">
-                                <input type="hidden" name="qty" value="1">
-
-                                <button class="btn btn-success btn-sm w-100">
-                                    Order Now
-                                </button>
-                            </form>
-
                         </div>
 
                     </div>

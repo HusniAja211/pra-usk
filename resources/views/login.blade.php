@@ -1,175 +1,177 @@
 <!doctype html>
 <html lang="en">
-<!-- [Head] start -->
-
 <head>
-    <title>Login | Gradient Able Dashboard Template</title>
-    <!-- [Meta] -->
+    <title>Login | AkuDatang</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description"
-        content="Gradient Able is trending dashboard template made using Bootstrap 5 design framework. Gradient Able is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies." />
-    <meta name="keywords"
-        content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard" />
-    <meta name="author" content="codedthemes" />
 
-    <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ asset('template/dist/assets/images/favicon.svg') }}" type="image/x-icon" />
-    <!-- [Google Font : Poppins] icon -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-    <!-- [Tabler Icons] https://tablericons.com -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/tabler-icons.min.css') }}" />
-    <!-- [Feather Icons] https://feathericons.com -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/feather.css') }}" />
-    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/fontawesome.css') }}" />
-    <!-- [Material Icons] https://fonts.google.com/icons -->
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/material.css') }}" />
-    <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('template/dist/assets/css/style.css') }}" id="main-style-link" />
     <link rel="stylesheet" href="{{ asset('template/dist/assets/css/style-preset.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/tabler-icons.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/fonts/fontawesome.css') }}" />
 
+    <style>
+        /* Global Reset to Monochrome Blue */
+        body {
+            background-color: #f8faff !important;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .auth-main.v1 {
+            background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, rgba(255, 255, 255, 1) 90.2%) !important;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.06); /* Soft Blue Shadow */
+        }
+
+        .form-control {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 18px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #2563eb !important;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .text-blue-600 { color: #2563eb !important; }
+        
+        .avtar.bg-social-outline {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .avtar.bg-social-outline:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .saprator span {
+            background: #fff;
+            padding: 0 15px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
-<!-- [Head] end -->
-<!-- [Body] Start -->
 
-<body data-pc-header="header-1" data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true"
-    data-pc-direction="ltr" data-pc-theme="light">
-    <!-- [ Pre-loader ] start -->
+<body>
     <div class="loader-bg">
         <div class="loader-track">
             <div class="loader-fill"></div>
         </div>
     </div>
-    <!-- [ Pre-loader ] End -->
 
-    <div class="auth-main v1 bg-grd-primary">
+    <div class="auth-main v1">
         <div class="auth-wrapper">
             <div class="auth-form">
                 <div class="card my-5">
-                    <div class="card-body">
+                    <div class="card-body p-4 p-sm-5">
                         <div class="text-center">
-                            <img src="{{ asset('template/dist/assets/images/logo-dark.svg') }}" alt="images"
-                                class="img-fluid mb-4" />
-                            <h4 class="f-w-500 mb-1">Login with your email</h4>
-                            <p class="mb-4">Don't have an Account? <a href="{{ route('register.create') }}"
-                                    class="link-primary ms-1">Create Account</a></p>
+                            <img src="{{ asset('template/dist/assets/images/logo-dark.svg') }}" alt="logo" class="img-fluid mb-4" style="max-height: 45px;" />
+                            <h4 class="f-w-600 mb-1">Selamat Datang Kembali</h4>
+                            <p class="mb-4 text-muted small">Belum punya akun? <a href="{{ route('register.create') }}" class="text-blue-600 fw-bold">Daftar sekarang</a></p>
                         </div>
+
                         <form action="{{ route('login.store') }}" method="post">
                             @csrf
                             <div class="form-group mb-3">
-                                <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="Email Address" name="email" />
+                                <label class="form-label small fw-500 text-muted">Alamat Email</label>
+                                <input type="email" class="form-control" placeholder="nama@email.com" name="email" required />
                             </div>
+
                             <div class="form-group mb-3">
-                                <input type="password" class="form-control" id="floatingInput1" placeholder="Password"
-                                    name="password" />
+                                <label class="form-label small fw-500 text-muted">Kata Sandi</label>
+                                <input type="password" class="form-control" placeholder="Masukkan kata sandi" name="password" required />
                             </div>
+
                             <div class="d-flex mt-1 justify-content-between align-items-center">
                                 <div class="form-check">
-                                    <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
-                                        checked="" />
-                                    <label class="form-check-label text-muted" for="customCheckc1">Remember me?</label>
+                                    <input class="form-check-input" type="checkbox" id="rememberMe" checked />
+                                    <label class="form-check-label text-muted small" for="rememberMe">Ingat saya</label>
                                 </div>
-                                <a href="../pages/forgot-password-v1.html">
-                                    <h6 class="f-w-400 mb-0">Forgot Password?</h6>
-                                </a>
+                                <a href="#" class="text-secondary small fw-500">Lupa Password?</a>
                             </div>
+
                             <div class="d-grid mt-4">
                                 @auth
                                     <a href="{{ auth()->user()->role == 'admin' ? route('admin.dashboard') : route('user.dashboard') }}"
-                                        class="btn btn-success">Dashboard</a>
+                                        class="btn btn-outline-primary py-2">Masuk ke Dashboard</a>
                                 @endauth
-                                @if (empty(Auth::check()))
-                                    <button type="submit" class="btn btn-primary">Login</button>
-                                @endif
+                                
+                                @guest
+                                    <button type="submit" class="btn btn-primary shadow-sm py-2">Masuk Sekarang</button>
+                                @endguest
                             </div>
                         </form>
-                        <div class="saprator my-3">
-                            <span>Or continue with</span>
+
+                        <div class="saprator my-4">
+                            <span>Atau masuk dengan</span>
                         </div>
+
                         <div class="text-center">
-                            <ul class="list-inline mx-auto mt-3 mb-0">
-                                <li class="list-inline-item">
-                                    <a href="https://www.facebook.com/" class="avtar avtar-s rounded-circle bg-facebook"
-                                        target="_blank">
-                                        <i class="fab fa-facebook-f text-white"></i>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="https://twitter.com/" class="avtar avtar-s rounded-circle bg-twitter"
-                                        target="_blank">
-                                        <i class="fab fa-twitter text-white"></i>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="https://myaccount.google.com/"
-                                        class="avtar avtar-s rounded-circle bg-googleplus" target="_blank">
-                                        <i class="fab fa-google text-white"></i>
-                                    </a>
-                                </li>
-                            </ul>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#" class="avtar avtar-s rounded-circle bg-social-outline">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="avtar avtar-s rounded-circle bg-social-outline">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="avtar avtar-s rounded-circle bg-social-outline">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
-    <!-- Required Js -->
+
     <script src="{{ asset('template/dist/assets/js/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/plugins/simplebar.min.js') }}"></script>
     <script src="{{ asset('template/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/fonts/custom-font.js') }}"></script>
     <script src="{{ asset('template/dist/assets/js/script.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/theme.js') }}"></script>
-    <script src="{{ asset('template/dist/assets/js/plugins/feather.min.js') }}"></script>
-
-
-    <script>
-        layout_change('light');
-    </script>
-
-    <script>
-        layout_sidebar_change('light');
-    </script>
-
-    <script>
-        change_box_container('false');
-    </script>
-
-    <script>
-        layout_caption_change('true');
-    </script>
-
-    <script>
-        layout_rtl_change('false');
-    </script>
-
-    <script>
-        preset_change('preset-1');
-    </script>
-
-    <script>
-        header_change('header-1');
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @if (session('success'))
         <script>
             Swal.fire({
                 icon: 'success',
-                title: 'Register Success',
-                text: '{{ session('success') }}',
-                timer: 2000,
-                showConfirmButton: false
+                title: 'Berhasil!',
+                text: '{{ session("success") }}',
+                timer: 3000,
+                showConfirmButton: false,
+                background: '#fff',
+                color: '#1e293b',
+                iconColor: '#2563eb'
             });
         </script>
     @endif
-
-
 </body>
-<!-- [Body] end -->
-
 </html>

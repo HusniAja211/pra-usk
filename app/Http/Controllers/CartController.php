@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Book;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,35 +51,64 @@ class CartController extends Controller
     /**
      * Checkout cart → order
      */
-    public function checkout()
+    public function checkout(Request $request)
     {
-        $carts = Cart::where('user_id', Auth::id())->get();
+        // Validasi input file
+        $request->validate([
+            'proof' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $user = Auth::user();
+        $carts = Cart::with('book')->where('user_id', $user->id)->get();
+
+        if ($carts->isEmpty()) {
+            return back()->with('error', 'Keranjang kosong!');
+        }
+
+        $proofPath = null;
+        if ($request->hasFile('proof')) {
+            $proofPath = $request->file('proof')->store('proofs', 'public');
+        }
+
+        $orderIds = []; // Array untuk menampung ID pesanan
+        $totalPayment = 0; // Menampung total tagihan
 
         foreach ($carts as $cart) {
+            $subtotal = $cart->qty * $cart->book->price;
+            $totalPayment += $subtotal;
 
-            $book = Book::find($cart->book_id);
-
-            Order::create([
-                'user_id' => Auth::id(),
+            // Buat data order
+            $order = Order::create([
+                'user_id' => $user->id,
                 'book_id' => $cart->book_id,
-                'qty' => $cart->qty,
-                'price' => $book->price,
-                'total' => $cart->qty * $book->price,
-                'status' => 'pending'
+                'qty'     => $cart->qty,
+                'price'   => $cart->book->price,
+                'total'   => $subtotal,
+                'status'  => 'pending' 
             ]);
 
+            // Buat data pembayaran
+            Payment::create([
+                'order_id'       => $order->id,
+                'total_price'    => $subtotal,
+                'cash'           => 0,
+                'change'         => 0,
+                'proof'          => $proofPath,
+                'payment_method' => 'transfer',
+                'status'         => 'pending'
+            ]);
+
+            // Simpan ID pesanan ke array dan hapus item dari keranjang
+            $orderIds[] = $order->id;
             $cart->delete();
         }
 
-        return redirect()->route('user.dashboard')
-            ->with('success', 'Checkout success');
-    }
-
-    public function remove($id)
-    {
-        $cart = Cart::findOrFail($id);
-        $cart->delete();
-
-        return back()->with('success','Item removed from cart');
+        // Redirect KEMBALI ke halaman cart, tapi bawa data sukses
+        // Pastikan nama route-nya sesuai dengan route halaman cart kamu
+        return redirect()->route('cart.index')->with([
+            'checkout_success' => true,
+            'order_ids'        => $orderIds,
+            'total_payment'    => $totalPayment
+        ]);
     }
 }

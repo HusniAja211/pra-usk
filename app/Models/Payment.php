@@ -10,7 +10,11 @@ class Payment extends Model
         'order_id',
         'total_price',
         'cash',
-        'change'
+        'change',
+        'proof',
+        'payment_method',
+        'status',
+        'reject_reason',
     ];
 
     public function order()

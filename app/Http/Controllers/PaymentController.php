@@ -10,86 +10,62 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display incoming payments
-     */
     public function index()
     {
-        $orders = Order::with(['user','book'])
-            ->where('status','pending')
+        $orders = Order::with(['user', 'book', 'payment'])
+            ->where('status', 'pending')
             ->latest()
             ->get();
 
         return view('content.admin.payment.index', compact('orders'));
     }
 
-    /**
-     * Approve payment
-     */
     public function approve($id)
     {
         $order = Order::findOrFail($id);
+        $payment = Payment::where('order_id', $order->id)->first();
 
-        $order->update([
-            'status' => 'paid'
-        ]);
+        // Update status order
+        $order->update(['status' => 'paid']);
 
-        // reduce book stock
-        $book = Book::find($order->book_id);
-
-        if($book){
-            $book->stock -= $order->qty;
-            $book->save();
+        // Update status payment menjadi verified jika ada
+        if ($payment) {
+            $payment->update(['status' => 'verified']);
         }
 
-        return back()->with('success','Payment approved');
-    }
-
-    public function invoice($id)
-    {
-        $payment = Payment::with(['order.user','order.book'])
-            ->findOrFail($id);
-
-        return view('content.admin.payment.invoice', compact('payment'));
-    }
-
-    public function pay(Request $request, $id)
-    {
-        $order = Order::findOrFail($id);
-
-        $request->validate([
-            'cash' => 'required|numeric'
-        ]);
-
-        $total = $order->total;
-        $cash = $request->cash;
-
-        if ($cash < $total) {
-            return back()->with('error','Uang tidak cukup');
-        }
-
-        $change = $cash - $total;
-
-        // simpan ke variabel
-        $payment = Payment::create([
-            'order_id' => $order->id,
-            'total_price' => $total,
-            'cash' => $cash,
-            'change' => $change
-        ]);
-
-        $order->update([
-            'status' => 'paid'
-        ]);
-
-        // kurangi stok buku
+        // Kurangi stok buku
         $book = Book::find($order->book_id);
-
         if ($book) {
             $book->stock -= $order->qty;
             $book->save();
         }
 
-        return redirect()->route('admin.payment.invoice', $payment->id);
+        return back()->with('success', 'Pembayaran berhasil disetujui');
     }
+
+    // Fungsi baru untuk menolak pembayaran
+    public function reject(Request $request, $id)
+    {
+        $request->validate([
+            'reject_reason' => 'required|string|max:255'
+        ]);
+
+        $order = Order::findOrFail($id);
+        $payment = Payment::where('order_id', $order->id)->first();
+
+        // Ubah status order menjadi cancelled
+        $order->update(['status' => 'cancelled']);
+
+        // Ubah status payment menjadi rejected dan simpan alasannya
+        if ($payment) {
+            $payment->update([
+                'status' => 'rejected',
+                'reject_reason' => $request->reject_reason // Uncomment ini jika kolom sudah dibuat di DB
+            ]);
+        }
+
+        return back()->with('success', 'Pembayaran berhasil ditolak');
+    }
+
+    // ... (fungsi invoice dan pay tetap sama) ...
 }

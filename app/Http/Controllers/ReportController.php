@@ -26,19 +26,29 @@ class ReportController extends Controller
         return view('content.admin.reports.index');
     }
 
-    public function chartReport()
-    {
-        $year = now()->year;
+public function chartReport()
+{
+    $year = now()->year;
 
-        $payments = Payment::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-            ->whereYear('created_at', $year)
-            ->groupBy('month')
-            ->pluck('total', 'month');
+    $payments = Payment::selectRaw('
+            MONTH(created_at) as month,
+            COUNT(*) as total_transactions,
+            SUM(total_price) as total_income
+        ')
+        ->whereYear('created_at', $year)
+        ->where('status', 'verified') // penting: hanya yang valid
+        ->groupBy('month')
+        ->get()
+        ->keyBy('month');
 
-        $reportData = collect(range(1,12))->map(function ($month) use ($payments) {
-            return $payments->get($month, 0);
-        });
+    $reportData = collect(range(1, 12))->map(function ($month) use ($payments) {
+        return [
+            'month' => $month,
+            'total_transactions' => $payments[$month]->total_transactions ?? 0,
+            'total_income' => $payments[$month]->total_income ?? 0,
+        ];
+    });
 
-        return response()->json($reportData);
-    }
+    return response()->json($reportData);
+}
 }
