@@ -42,9 +42,11 @@
                                 <li class="pc-item"><a class="pc-link" href="{{ route('admin.payment.index') }}"><i
                                             class="ph ph-money"></i> Payment
                                         Books</a></li>
-                                <li class="pc-item"><a class="pc-link" href="{{ route('admin.cart.index') }}"><i class="ph ph-shopping-cart"></i>
+                                <li class="pc-item"><a class="pc-link" href="{{ route('admin.cart.index') }}"><i
+                                            class="ph ph-shopping-cart"></i>
                                         Carts</a></li>
-                                <li class="pc-item"><a class="pc-link" href="{{ route('admin.report.index') }}"><i class="ph ph-chart-bar"></i>
+                                <li class="pc-item"><a class="pc-link" href="{{ route('admin.report.index') }}"><i
+                                            class="ph ph-chart-bar"></i>
                                         Reports</a></li>
                             </ul>
                         </li>
@@ -52,8 +54,8 @@
                     @elseif(auth()->user()->role == 'user')
                         {{-- USER START --}}
                         <li class="pc-item">
-                            <a href="{{ route('about') }}" class="pc-link"><span class="pc-micon"> <i class="ph ph-info"></i></span><span
-                                    class="pc-mtext">About Us</span></a>
+                            <a href="{{ route('about') }}" class="pc-link"><span class="pc-micon"> <i
+                                        class="ph ph-info"></i></span><span class="pc-mtext">About Us</span></a>
                         </li>
                         <li class="pc-item">
                             <a href="https://wa.me/6285781197648" class="pc-link"><span class="pc-micon"> <i
@@ -61,11 +63,14 @@
                                     Admin</span></a>
                         </li>
                         <li class="pc-item">
-                        <a href="{{ route('cart.index') }}" class="pc-link"><span class="pc-micon"> <i
+                            <a href="{{ route('cart.index') }}" class="pc-link"><span class="pc-micon"> <i
                                         class="ph ph-chat-circle-text"></i></span><span class="pc-mtext">Cart
-                                    </span></a>
+                                </span></a>
                         </li>
                         <li class="pc-item">
+                            <a href="{{ route('user.history') }}" class="pc-link"><span class="pc-micon"> <i
+                                        class="ph ph-chat-circle-text"></i></span><span class="pc-mtext">Purchase
+                                    History</span></a>
                         </li>
                         {{-- USER END --}}
                     @endif

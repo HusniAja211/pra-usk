@@ -7,13 +7,14 @@ use App\Models\Order;
 use App\Models\Book;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf; 
 
 class PaymentController extends Controller
 {
     public function index()
     {
         $orders = Order::with(['user', 'book', 'payment'])
-            ->where('status', 'pending')
+            ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END")
             ->latest()
             ->get();
 
@@ -67,5 +68,18 @@ class PaymentController extends Controller
         return back()->with('success', 'Pembayaran berhasil ditolak');
     }
 
-    // ... (fungsi invoice dan pay tetap sama) ...
+    public function invoice($id)
+    {
+        $payment = Payment::with(['order.user', 'order.book'])->findOrFail($id);
+
+        // 2. Load view ke dalam DomPDF
+        $pdf = Pdf::loadView('content.admin.payment.invoice', compact('payment'));
+        
+        // Opsional: Atur ukuran kertas ke bentuk struk (lebar 300pt)
+        $customPaper = array(0, 0, 300, 450);
+        $pdf->setPaper($customPaper);
+
+        // 3. Return stream agar terbuka di browser sebagai PDF
+        return $pdf->stream('Invoice-INV-'. str_pad($payment->id, 4, '0', STR_PAD_LEFT) .'.pdf');
+    }
 }

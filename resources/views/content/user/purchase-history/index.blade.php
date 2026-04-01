@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <h3 class="mb-4">Incoming Payments</h3>
+    <h3 class="mb-4">My Purchase History</h3>
 
     {{-- Pesan Sukses --}}
     @if (session('success'))
@@ -15,7 +15,6 @@
                 <thead class="table-light">
                     <tr>
                         <th>Order ID</th>
-                        <th>User</th>
                         <th>Book</th>
                         <th>Qty</th>
                         <th>Total</th>
@@ -29,7 +28,6 @@
                     @forelse($orders as $order)
                         <tr>
                             <td><strong>#{{ $order->id }}</strong></td>
-                            <td>{{ $order->user->name ?? '-' }}</td>
                             <td>{{ $order->book->title ?? '-' }}</td>
                             <td>{{ $order->qty }}</td>
                             <td class="fw-bold text-success">
@@ -60,36 +58,34 @@
                                 @endif
                             </td>
 
-                            {{-- Action Buttons Berdasarkan Status --}}
+                            {{-- Action Buttons Khusus User --}}
                             <td>
                                 <div class="d-flex gap-2">
                                     @if ($order->status == 'pending')
-                                        {{-- Tombol Approve --}}
-                                        <form action="{{ route('admin.payment.approve', $order->id) }}" method="POST">
-                                            @csrf
-                                            <button class="btn btn-success btn-sm">Approve</button>
-                                        </form>
+                                        <span class="text-muted small">Menunggu Verifikasi...</span>
 
-                                        {{-- Tombol Tolak (Trigger Modal) --}}
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#rejectModal" data-orderid="{{ $order->id }}">
-                                            Tolak
-                                        </button>
                                     @elseif($order->status == 'paid' && $order->payment)
                                         {{-- Tombol Lihat Invoice --}}
-                                        <a href="{{ route('admin.payment.invoice', $order->payment->id) }}" target="_blank"
+                                        {{-- Catatan: Pastikan kamu membuat route 'user.payment.invoice' di web.php --}}
+                                        <a href="{{ route('user.payment.invoice', $order->payment->id) }}" target="_blank"
                                             class="btn btn-primary btn-sm">
                                             Lihat Invoice
                                         </a>
+
                                     @elseif($order->status == 'cancelled')
-                                        <span class="text-muted small">Ditolak</span>
+                                        {{-- Tombol Lihat Alasan Penolakan --}}
+                                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#reasonModal" 
+                                            data-reason="{{ $order->payment->reject_reason ?? 'Pesanan dibatalkan oleh admin.' }}">
+                                            Lihat Alasan
+                                        </button>
                                     @endif
                                 </div>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center text-muted">No incoming payments</td>
+                            <td colspan="7" class="text-center text-muted">Belum ada riwayat pembelian.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -102,11 +98,10 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="proofModalLabel">Bukti Transfer</h5>
+                    <h5 class="modal-title" id="proofModalLabel">Bukti Transfer Saya</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    {{-- Gambar akan di-load ke tag img ini oleh JavaScript --}}
                     <img id="proofImage" src="" alt="Bukti Transfer" class="img-fluid rounded shadow-sm"
                         style="max-height: 80vh; object-fit: contain;">
                 </div>
@@ -114,33 +109,23 @@
         </div>
     </div>
 
-    {{-- MODAL REJECT --}}
-    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    {{-- MODAL ALASAN PENOLAKAN --}}
+    <div class="modal fade" id="reasonModal" tabindex="-1" aria-labelledby="reasonModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="reasonModalLabel">Pesanan Ditolak</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                <form id="rejectForm" method="POST" action="">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="reject_reason" class="form-label">Berikan alasan mengapa pembayaran ditolak <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="reject_reason" name="reject_reason" rows="3" required
-                                placeholder="Contoh: Bukti transfer buram, nominal tidak sesuai..."></textarea>
+                <div class="modal-body">
+                    <p class="mb-1 fw-bold">Alasan Penolakan:</p>
+                    <div class="alert alert-danger" id="rejectReasonText">
                         </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-danger">Tolak Pesanan</button>
-                    </div>
-                </form>
-
+                    <p class="mb-0 text-muted small">Silakan lakukan pemesanan ulang dan pastikan bukti transfer sudah sesuai.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
@@ -149,23 +134,22 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // 1. Script untuk Modal Reject
-            var rejectModal = document.getElementById('rejectModal');
-            rejectModal.addEventListener('show.bs.modal', function(event) {
-                var button = event.relatedTarget;
-                var orderId = button.getAttribute('data-orderid');
-                var form = document.getElementById('rejectForm');
-                var actionUrl = "{{ route('admin.payment.reject', ':id') }}";
-                form.action = actionUrl.replace(':id', orderId);
-            });
-
-            // 2. Script untuk Modal Lihat Bukti
+            // 1. Script untuk Modal Lihat Bukti (Sama dengan Admin)
             var proofModal = document.getElementById('proofModal');
             proofModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget;
                 var imageUrl = button.getAttribute('data-img-url');
                 var modalImg = document.getElementById('proofImage');
                 modalImg.src = imageUrl;
+            });
+
+            // 2. Script untuk Modal Alasan Penolakan (Khusus User)
+            var reasonModal = document.getElementById('reasonModal');
+            reasonModal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget;
+                var reason = button.getAttribute('data-reason'); // Ambil alasan dari atribut data-reason
+                var reasonContainer = document.getElementById('rejectReasonText');
+                reasonContainer.textContent = reason; // Masukkan teks alasan ke dalam modal
             });
 
         });

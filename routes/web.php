@@ -12,6 +12,7 @@ use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PurchaseHistoryController; 
 use Illuminate\Support\Facades\Route;
 
 
@@ -76,7 +77,7 @@ Route::middleware(['auth', 'admin']) // Hanya bisa diakses oleh user login & rol
     Route::get('/payment/{id}/invoice',[PaymentController::class,'invoice'])
         ->name('payment.invoice');
 
-    // Melihat semua cart user (admin view)
+    // Melihat semua cart user 
     Route::get('cart', [AdminCartController::class, 'index'])
         ->name('cart.index');
 
@@ -129,4 +130,13 @@ Route::prefix('user')->middleware('auth')->group(function () {
     // Buy now (langsung beli tanpa masuk cart)
     Route::post('/buy-now/{id}', [OrderController::class, 'buyNow'])
         ->name('buy.now');
+
+    // Lihat riwayat pembelian user 
+    Route::get('/history', [PurchaseHistoryController::class, 'index'])
+        ->name('user.history');
+    
+    // Lihat invoice pembelian user
+    Route::get('/payment/{id}/invoice',[PurchaseHistoryController::class,'invoice'])
+        ->name('user.payment.invoice');
+
 });
