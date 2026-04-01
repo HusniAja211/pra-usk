@@ -13,6 +13,7 @@ class Order extends Model
         'price',
         'total',
         'status',
+        'shipping_fee'
     ];
 
     public function user()

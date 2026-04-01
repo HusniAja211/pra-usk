@@ -40,6 +40,9 @@ class RegisterController extends Controller
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
+            'address' => 'required|string|max:255',
+            'latitude' => 'nullable|string|max:255',
+            'longitude' => 'nullable|string|max:255',
             'password' => 'required|string|min:8',
             'confirm_password' => 'required|same:password'
         ]);
@@ -47,6 +50,9 @@ class RegisterController extends Controller
         User::create([
             'name' => $request->first_name . ' ' . $request->last_name,
             'email' => $request->email,
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'password' => Hash::make($request->password),
             'role' => 'user',
         ]);
@@ -61,6 +67,9 @@ class RegisterController extends Controller
             'role' => 'required|in:admin,user',
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
+            'address' => 'required|string|max:255',
+            'latitude' => 'nullable|string|max:255',
+            'longitude' => 'nullable|string|max:255',
             'password' => 'required|string|min:8',
             'confirm_password' => 'required|same:password'
         ]);
@@ -69,6 +78,7 @@ class RegisterController extends Controller
             'role' => $request->role,
             'name' => $request->name,
             'email' => $request->email,
+            'address' => $request->address,
             'password' => Hash::make($request->password)
         ]);
 
@@ -102,6 +112,9 @@ class RegisterController extends Controller
             'role' => 'nullable|in:admin,user',
             'name' => 'nullable|string|max:100',
             'email' => 'nullable|email|unique:users,email,' . $id,
+            'address' => 'nullable|string|max:255',
+            'latitude' => 'nullable|string|max:255',
+            'longitude' => 'nullable|string|max:255',
             'password' => 'nullable|string|min:8',
             'confirm_password' => 'nullable|same:password'
         ]);

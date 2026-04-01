@@ -13,10 +13,13 @@
                         <th>Title</th>
                         <th>Category</th>
                         <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Modal</th>
                         <th>Price</th>
+                        <th>Margin</th>
+                        <th>Profit</th>
                         <th>Stock</th>
                         <th>Description</th>
-                        <th>Image</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,10 +30,13 @@
                             <td>{{$book->title}}</td>
                             <td>{{$book->category->name ?? 'No Category'}}</td>
                             <td>{{$book->author}}</td>
+                            <td>{{$book->publisher}}</td>
+                            <td>Rp {{ number_format($book->modal, 0, ',', '.') }}</td>
                             <td>Rp {{ number_format($book->price, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($book->margin, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($book->profit, 0, ',', '.') }}</td>
                             <td>{{$book->stock}}</td>
                             <td>{{$book->description}}</td>
-                            <td>{{$book->image}}</td>
                             <td>
                                 <a href="{{route('admin.book.edit', $book->id)}}" class="btn btn-success btn-sm">Edit</a>
                                 <form action="{{route('admin.book.destroy', $book->id)}}" onclick="return confirm('Yakin ingin didelete?')" method="post" class="d-inline">

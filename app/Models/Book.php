@@ -13,7 +13,12 @@ class Book extends Model
     'price', 
     'stock', 
     'description', 
-    'image'];
+    'image',
+    'modal',
+    'margin',
+    'profit',
+    'publisher'
+    ];
 
     public function category()
     {

@@ -93,6 +93,9 @@ Route::middleware(['auth', 'admin']) // Hanya bisa diakses oleh user login & rol
     Route::get('admin/report/products', [ReportController::class, 'productReport'])
         ->name('report.products');
 
+    // Export laporan ke Excel
+    Route::get('/reports/export-orders', [ReportController::class, 'exportOrders'])->name('reports.export.orders');
+
 });
 
 

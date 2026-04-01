@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Book;
 use App\Models\Payment;
+use App\Exports\OrdersReportExport;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf; 
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
@@ -81,5 +83,10 @@ class PaymentController extends Controller
 
         // 3. Return stream agar terbuka di browser sebagai PDF
         return $pdf->stream('Invoice-INV-'. str_pad($payment->id, 4, '0', STR_PAD_LEFT) .'.pdf');
+    }
+
+    public function exportOrders()
+    {
+        return Excel::download(new OrdersReportExport, 'orders_report.xlsx');
     }
 }

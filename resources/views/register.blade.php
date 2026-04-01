@@ -127,6 +127,24 @@
                             </div>
 
                             <div class="form-group mb-3">
+                                <label class="form-label small fw-500">Alamat Rumah</label>
+                                <input type="text" class="form-control" placeholder="Jl. Raya No. 123" name="address" required value="{{ old('address') }}" />
+                                @error('address') <div class="error-text">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label small fw-500">Latitude</label>
+                                <input type="text" class="form-control" placeholder="Contoh: -6.200000" name="latitude" required value="{{ old('latitude') }}" />
+                                @error('latitude') <div class="error-text">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label small fw-500">Longitude</label>
+                                <input type="text" class="form-control" placeholder="Contoh: 106.816666" name="longitude" required value="{{ old('longitude') }}" />
+                                @error('longitude') <div class="error-text">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
                                 <label class="form-label small fw-500">Kata Sandi</label>
                                 <input type="password" class="form-control" placeholder="Minimal 8 karakter" name="password" required />
                                 @error('password') <div class="error-text">{{ $message }}</div> @enderror
