@@ -1,8 +1,3 @@
-Nice, itu penting banget buat frontend Laravel 👍 Aku tambahin dengan posisi yang pas biar alurnya tetap enak diikuti.
-
-
----
-
 📚 Web BookShop Sederhana
 
 Project ini dibuat sebagai bagian dari tugas Pra-USK dan Uji Sertifikasi Kompetensi (USK) di SMK Negeri 71 Jakarta.
