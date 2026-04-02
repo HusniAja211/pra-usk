@@ -12,7 +12,8 @@ use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\PurchaseHistoryController; 
+use App\Http\Controllers\PurchaseHistoryController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,8 +22,10 @@ use Illuminate\Support\Facades\Route;
 // ======================
 
 // Menampilkan halaman login
-Route::get('/', [LoginController::class, 'index'])->name('login.index');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
+// Ke konten halaman login
+Route::get('/login', [LoginController::class, 'create'])->name('login.create');
 // Proses login user
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 

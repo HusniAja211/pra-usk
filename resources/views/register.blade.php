@@ -98,7 +98,7 @@
                         <div class="text-center">
                             <img src="{{ asset('template/dist/assets/images/logo-dark.svg') }}" alt="logo" class="img-fluid mb-4" style="max-height: 40px;" />
                             <h4 class="f-w-600 mb-1">Daftar Akun Baru</h4>
-                            <p class="mb-4 text-muted small">Sudah punya akun? <a href="{{ route('login.index') }}" class="text-blue-primary fw-bold">Masuk di sini</a></p>
+                            <p class="mb-4 text-muted small">Sudah punya akun? <a href="{{ route('login.create') }}" class="text-blue-primary fw-bold">Masuk di sini</a></p>
                         </div>
 
                         <form action="{{ route('register.store') }}" method="post">
